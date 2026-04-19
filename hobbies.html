@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio - Hobbies</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --accent-color: #6366f1;
+            --accent-hover: #4f46e5;
+            --text-color: #1e293b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --card-shadow: 0 10px 20px rgba(99, 102, 241, 0.1);
+            --nav-bg: #ffffff;
+            --border-color: rgba(99, 102, 241, 0.2);
+            --gradient-start: #6366f1;
+            --gradient-end: #818cf8;
+        }
+
+        [data-theme="dark"] {
+            --accent-color: #818cf8;
+            --accent-hover: #6366f1;
+            --text-color: #f1f5f9;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            --nav-bg: #1e293b;
+            --border-color: rgba(129, 140, 248, 0.2);
+            --gradient-start: #818cf8;
+            --gradient-end: #a5b4fc;
+        }
+
+        .hobby-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hobby-card.animate-fade-up {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hobby-card:hover {
+            animation: none;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.15);
+            border-color: var(--accent-color);
+        }
+
+        .hobby-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .hobby-card:hover i {
+            transform: scale(1.2) rotate(5deg);
+            color: var(--accent-hover);
+        }
+
+        .hobby-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .hobby-card:hover h3 {
+            color: var(--accent-hover);
+        }
+
+        .hobby-card p {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .hobby-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .page-header {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--card-bg);
+            padding: 4rem 0;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            text-align: center;
+        }
+
+        .page-header.animate-fade-up {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .page-header h1 {
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header .section-description {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 0;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes slideInFromLeft {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInFromRight {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        .hobby-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hobby-card:hover .hobby-icon {
+            animation: none;
+            transform: scale(1.1);
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: var(--card-shadow);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .photo-item.animate-fade-up {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .photo-item:hover .gallery-image {
+            transform: scale(1.1);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 1.5rem;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .photo-item:hover .photo-overlay {
+            animation: none;
+            transform: scale(1.1);
+        }
+
+        .photo-overlay h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .photo-overlay p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .photo-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-gallery {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="top-nav">
+        <div class="container">
+            <a href="index.html" class="logo">My Portfolio</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="achievements.html">Achievements</a></li>
+                <li><a href="hobbies.html" class="active">Hobbies</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="snippets.html">Code Snippets</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header animate-on-scroll">
+        <div class="container">
+            <h1>My Hobbies</h1>
+            <p class="section-description">A few things I enjoy that keep me creative, curious, and inspired beyond academics.</p>
+        </div>
+    </section>
+
+    <!-- Hobbies Content -->
+    <section class="section">
+        <div class="container">
+            <div class="hobbies-grid">
+                <div class="hobby-card animate-on-scroll">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Reading</h3>
+                    <p>Reading enables me to continuously learn, expand my knowledge base, and develop a deeper understanding of both technical and non-technical domains.</p>
+                    <div class="hobby-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">Knowledge</div>
+                            <div class="stat-label">Growth</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">Curiosity</div>
+                            <div class="stat-label">Mindset</div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="hobby-card animate-on-scroll">
+                 <i class="fas fa-plane-departure"></i>
+                 <h3>Travelling</h3>
+                 <p>Travelling allows me to explore diverse cultures, broaden my perspective, and gain real-world insights that inspire both personal and professional growth.</p>
+                 <div class="hobby-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">New</div>
+                        <div class="stat-label">Experiences</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Global</div>
+                        <div class="stat-label">Exposure</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hobby-card animate-on-scroll">
+                <i class="fas fa-music"></i>
+                <h3>Dancing</h3>
+                <p>Dancing helps me maintain discipline, creativity, and confidence while providing a strong outlet for self-expression and energy.</p>
+                <div class="hobby-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">Energy</div>
+                        <div class="stat-label">Movement</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Creative</div>
+                        <div class="stat-label">Expression</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hobby-card animate-on-scroll">
+                <i class="fas fa-palette"></i>
+                <h3>Drawing &amp; Painting</h3>
+                <p>I engage in drawing and painting to enhance creativity, visual thinking, and attention to detail, which also supports my problem-solving approach.</p>
+                <div class="hobby-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">Art</div>
+                        <div class="stat-label">Creativity</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Visual</div>
+                        <div class="stat-label">Thinking</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hobby-card animate-on-scroll">
+                <i class="fas fa-camera"></i>
+                <h3>Photography</h3>
+                <p>Photography helps me observe details, capture meaningful moments, and develop a creative perspective through visual storytelling.</p>
+                <div class="hobby-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">Visual</div>
+                        <div class="stat-label">Stories</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Creative</div>
+                        <div class="stat-label">Perspective</div>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div class="hobby-card animate-on-scroll">
+                <i class="fas fa-robot"></i>
+                <h3>AI Experimentation</h3>
+                <p>I enjoy experimenting with artificial intelligence concepts and building small models to explore how intelligent systems solve real-world problems.</p>
+                <div class="hobby-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">AI</div>
+                        <div class="stat-label">Learning</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Models</div>
+                        <div class="stat-label">Exploration</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+                
+       
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 My Portfolio. All rights reserved.</p>
+           <div class="social-links">
+             <a href="https://github.com/vedikakapoor-11" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-github"></i>
+            </a>
+            
+            <a href="https://www.linkedin.com/in/vedika-kapoor" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="#" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-up');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Update observer to include photo items
+        document.querySelectorAll('.page-header, .hobby-card, .photo-item').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html> 
